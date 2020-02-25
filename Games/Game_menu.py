@@ -1,23 +1,6 @@
-from tkinter import *
-from tkinter import messagebox
-import winsound
-import sys
-import os
+from Global_functions import *
 
-
-def click_sound():
-    winsound.PlaySound("Click.wav", winsound.SND_ASYNC)
-
-
-def TicTacToe():
-    click_sound()
-    os.system("TicTacToe.py")
-
-
-def GuessingGame():
-    click_sound()
-    os.system("GuessingGame.py")
-
+print('Game_menu')
 
 game_menu = Tk()
 game_menu.title('GAMES')
@@ -27,12 +10,13 @@ game_menu.configure(bg="black")
 game_menu_frame = Frame(game_menu, bg='#66B933')
 game_menu_frame.place(relx=0.5, rely=0.15, relheight=0.8, relwidth=0.7, anchor='n')
 
-TicTacToe = Button(game_menu_frame, text=("Tic Tac Toe"), bg=("grey"), font=('Autobus Bold', 25), command=TicTacToe)
-TicTacToe.place(relx=0.25, rely=0.1, relheight=0.2, relwidth=0.5)
+buttons = [{"name": "Tic Tac Toe^", "path": ".\\Games\\TicTacToe.py"},
+           {"name": "Guess the number", "path": ".\\Games\\GuessingGame.py"},
+           {"name": "Dodge the blocks^", "path": ".\\Games\\DodgeTheBlocks.py"},
+           {"name": "Pythons and ladders*", "path": ".\\Games\\PythonsAndLadders.py"}]
 
-GuessingGame = Button(game_menu_frame, text=("Guessing Game"), bg=("grey"), font=('Autobus Bold', 25),
-                      command=GuessingGame)
-GuessingGame.place(relx=0.25, rely=0.35, relheight=0.2, relwidth=0.5)
+create_buttons(game_menu, game_menu_frame, buttons, 1)
 
-# PythonsAndLadders = Button(game_menu_frame , text=("Pythons And Ladders"), bg=("grey"), font=('Autobus Bold',25), command=gameButton)
-# PythonsAndLadders.place(relx=0.1, rely=0.6, relheight=0.2, relwidth=0.8)
+create_back_button(game_menu)
+
+mainloop()

@@ -1,6 +1,6 @@
 print("this program converts the given temprature to the desired unit.")
 count = 0
-while (count == 0):
+while count == 0:
     print("Enter the temp with units, 'k','c' or 'f'")
     t = input("input the temp::")
     m = float(t[0:-1])

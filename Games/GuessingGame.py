@@ -1,7 +1,16 @@
-from tkinter import *
-from tkinter import messagebox
-
 import random
+
+
+def get_int(text="a number "):
+    flag = False
+    while not flag:
+        try:
+            entry = int(input("Enter " + text + ":: "))
+            flag = True
+        except ValueError:
+            print("Please enter an integer value")
+    return entry
+
 
 print("1--Easy",
       "2--Moderate",
@@ -27,10 +36,11 @@ x = random.randint(lower_limit, upper_limit)
 # print(x)
 print("you have to guess the random number between ", lower_limit, " and ", upper_limit)
 repeat, c, ci, un = True, 0, 0, 0
-u = int(input("Your guess here::"))
+u = get_int("your guess here")
 c += 1
 ci += 1
-while (repeat == True):
+
+while repeat:
     if u == x or un == x:
         print("your guess is right !")
         print("you guessed  the no. in ", c, " turns")
@@ -38,13 +48,13 @@ while (repeat == True):
     elif u > x:
         if ci == 1:
             print("Your guess is greater than the number")
-        un = int(input("Your next guess here::"))
+        un = get_int("your next guess here")
         c += 1
         ci += 1
         if un > u:
             print("going the wrong way...")
             u = un
-        elif un <= u and un > x:
+        elif u >= un > x:
             print("getting closer!")
             u = un
         elif un < x:
@@ -54,13 +64,13 @@ while (repeat == True):
     elif u < x:
         if ci == 1:
             print("Your guess is smaller than the number")
-        un = int(input("Your next guess here::"))
+        un = get_int("your next guess here")
         c += 1
         ci += 1
         if un < u:
             print("going the wrong way...")
             u = un
-        elif un >= u and un < x:
+        elif u <= un < x:
             print("getting closer!")
             u = un
         elif un > x:

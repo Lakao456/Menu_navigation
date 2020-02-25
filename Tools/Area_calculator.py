@@ -25,7 +25,7 @@ while (k == 0):
     elif int(n) == 4:
         r = float(input("Enter the radius of the base::"))
         h = float(input("Enter the hieght of the cylinder::"))
-        print("The area of the cylinder is", 2 * 3.14 * r * (r + h))
+        print("The Surface area of the cylinder is", 2 * 3.14 * r * (r + h))
     elif int(n) == 5:
         r = float(input("Enter the radius of the sphere::"))
         print("The area of the sphere is", (3 / 4) * 3.14 * (r ** 3))
