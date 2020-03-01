@@ -1,7 +1,25 @@
 from tkinter import *
 import winsound
 from functools import partial
-import os
+import sys
+import pygame
+
+sys.path.append('/Users/Aman/PycharmProjects/Menu_navigation/Games')
+sys.path.append('/Users/Aman/PycharmProjects/Menu_navigation/Tools')
+sys.path.append('/Users/Aman/PycharmProjects/Menu_navigation/Weather_App')
+
+from Game_menu import Game_menu
+from TicTacToe import TicTacToe
+from GuessingGame import GuessingGame
+from DodgeTheBlocks import DodgeTheBlocks
+from GuessingGame import GuessingGame
+
+from Tools_menu import Tools_menu
+from Area_calculator import Area_calculator
+from BMI_calculator import BMI_calculator
+from Temperature_converter import Temperature_converter
+
+from Weather_App import Weather_App
 
 print("**Global_functions IMPORTED**")
 
@@ -9,7 +27,7 @@ print("**Global_functions IMPORTED**")
 def create_buttons(root, parent_frame, buttons_list, column_num=1):
     def button_click(buttons_list2, n=0):
         click_sound()
-        buttons[n].config(command=os.system(buttons_list2[n]["path"]))
+        buttons[n].config(command=eval(buttons_list2[n]['func_name'] + '()'))
 
     buttons_qty = len(buttons_list)
     buttons = []

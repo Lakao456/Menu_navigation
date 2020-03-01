@@ -3,133 +3,126 @@ import pygame
 import random
 import sys
 
-pygame.init()
+def DodgeTheBlocks():
+    pygame.init()
 
-WIDTH = 800
-HEIGHT = 600
+    WIDTH = 800
+    HEIGHT = 600
 
-RED = (255, 0, 0)
-BLUE = (0, 0, 255)
-YELLOW = (255, 255, 0)
-BACKGROUND_COLOR = (0, 0, 0)
+    RED = (255, 0, 0)
+    BLUE = (0, 0, 255)
+    YELLOW = (255, 255, 0)
+    BACKGROUND_COLOR = (0, 0, 0)
 
-player_size = 50
-player_pos = [WIDTH / 2, HEIGHT - 2 * player_size]
+    player_size = 50
+    player_pos = [WIDTH / 2, HEIGHT - 2 * player_size]
 
-enemy_size = 50
-enemy_pos = [random.randint(0, WIDTH - enemy_size), 0]
-enemy_list = [enemy_pos]
+    enemy_size = 50
+    enemy_pos = [random.randint(0, WIDTH - enemy_size), 0]
+    enemy_list = [enemy_pos]
 
-SPEED = 10
+    SPEED = 10
 
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
-game_over = False
+    game_over = False
 
-score = 0
+    score = 0
 
-clock = pygame.time.Clock()
+    clock = pygame.time.Clock()
 
-myFont = pygame.font.SysFont("monospace", 35)
+    myFont = pygame.font.SysFont("monospace", 35)
 
-
-def set_level(level_score, level_speed):
-    if level_score < 20:
-        level_speed = 5
-    elif level_score < 40:
-        level_speed = 8
-    elif level_score < 60:
-        level_speed = 12
-    else:
-        level_speed = 15
-    return level_speed
-
-
-# SPEED = score/5 + 1
-
-
-def drop_enemies(enemy_list):
-    delay = random.random()
-    if len(enemy_list) < 10 and delay < 0.1:
-        x_pos = random.randint(0, WIDTH - enemy_size)
-        y_pos = 0
-        enemy_list.append([x_pos, y_pos])
-
-
-def draw_enemies(enemy_list):
-    for enemy_pos in enemy_list:
-        pygame.draw.rect(screen, BLUE, (enemy_pos[0], enemy_pos[1], enemy_size + 5, enemy_size + 5))
-
-
-def update_enemy_positions(enemy_list, score):
-    for idx, enemy_pos in enumerate(enemy_list):
-        if 0 <= enemy_pos[1] < HEIGHT:
-            enemy_pos[1] += SPEED
+    def set_level(level_score, level_speed):
+        if level_score < 20:
+            level_speed = 5
+        elif level_score < 40:
+            level_speed = 8
+        elif level_score < 60:
+            level_speed = 12
         else:
-            enemy_list.pop(idx)
-            score += 1
-    return score
+            level_speed = 15
+        return level_speed
 
+    # SPEED = score/5 + 1
 
-def collision_check(enemy_list, player_pos):
-    for enemy_pos in enemy_list:
-        if detect_collision(enemy_pos, player_pos):
-            return True
-    return False
+    def drop_enemies(enemy_list):
+        delay = random.random()
+        if len(enemy_list) < 10 and delay < 0.1:
+            x_pos = random.randint(0, WIDTH - enemy_size)
+            y_pos = 0
+            enemy_list.append([x_pos, y_pos])
 
+    def draw_enemies(enemy_list):
+        for enemy_pos in enemy_list:
+            pygame.draw.rect(screen, BLUE, (enemy_pos[0], enemy_pos[1], enemy_size + 5, enemy_size + 5))
 
-def detect_collision(player_pos, enemy_pos):
-    p_x = player_pos[0]
-    p_y = player_pos[1]
+    def update_enemy_positions(enemy_list, score):
+        for idx, enemy_pos in enumerate(enemy_list):
+            if 0 <= enemy_pos[1] < HEIGHT:
+                enemy_pos[1] += SPEED
+            else:
+                enemy_list.pop(idx)
+                score += 1
+        return score
 
-    e_x = enemy_pos[0]
-    e_y = enemy_pos[1]
+    def collision_check(enemy_list, player_pos):
+        for enemy_pos in enemy_list:
+            if detect_collision(enemy_pos, player_pos):
+                return True
+        return False
 
-    if (p_x <= e_x < (p_x + player_size)) or (e_x <= p_x < (e_x + enemy_size)):
-        if (p_y <= e_y < (p_y + player_size)) or (e_y <= p_y < (e_y + enemy_size)):
-            return True
-    return False
+    def detect_collision(player_pos, enemy_pos):
+        p_x = player_pos[0]
+        p_y = player_pos[1]
 
+        e_x = enemy_pos[0]
+        e_y = enemy_pos[1]
 
-while not game_over:
+        if (p_x <= e_x < (p_x + player_size)) or (e_x <= p_x < (e_x + enemy_size)):
+            if (p_y <= e_y < (p_y + player_size)) or (e_y <= p_y < (e_y + enemy_size)):
+                return True
+        return False
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            sys.exit()
+    while not game_over:
 
-        if event.type == pygame.KEYDOWN:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
 
-            x = player_pos[0]
-            y = player_pos[1]
+            if event.type == pygame.KEYDOWN:
 
-            if event.key == pygame.K_LEFT:
-                x -= player_size / 2
-            elif event.key == pygame.K_RIGHT:
-                x += player_size / 2
+                x = player_pos[0]
+                y = player_pos[1]
 
-            player_pos = [x, y]
+                if event.key == pygame.K_LEFT:
+                    x -= player_size / 2
+                elif event.key == pygame.K_RIGHT:
+                    x += player_size / 2
 
-    screen.fill(BACKGROUND_COLOR)
+                player_pos = [x, y]
 
-    drop_enemies(enemy_list)
-    score = update_enemy_positions(enemy_list, score)
-    SPEED = set_level(score, SPEED)
+        screen.fill(BACKGROUND_COLOR)
 
-    text = "Score:" + str(score)
-    label = myFont.render(text, 1, YELLOW)
-    screen.blit(label, (WIDTH - 200, HEIGHT - 40))
+        drop_enemies(enemy_list)
+        score = update_enemy_positions(enemy_list, score)
+        SPEED = set_level(score, SPEED)
 
-    if collision_check(enemy_list, player_pos):
-        game_over = True
-        break
+        text = "Score:" + str(score)
+        label = myFont.render(text, 1, YELLOW)
+        screen.blit(label, (WIDTH - 200, HEIGHT - 40))
 
-    draw_enemies(enemy_list)
+        if collision_check(enemy_list, player_pos):
+            game_over = True
+            break
 
-    pygame.draw.rect(screen, RED, (player_pos[0], player_pos[1], player_size, player_size))
+        draw_enemies(enemy_list)
 
-    clock.tick(30)
+        pygame.draw.rect(screen, RED, (player_pos[0], player_pos[1], player_size, player_size))
 
-    pygame.display.update()
+        clock.tick(30)
 
-print(score
-      )
+        pygame.display.update()
+
+    print(score)
+    x = input("Press enter to exit.")
