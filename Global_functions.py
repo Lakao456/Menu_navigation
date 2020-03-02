@@ -2,11 +2,10 @@ from tkinter import *
 import winsound
 from functools import partial
 import sys
-import pygame
 
-sys.path.append('/Users/Aman/PycharmProjects/Menu_navigation/Games')
-sys.path.append('/Users/Aman/PycharmProjects/Menu_navigation/Tools')
-sys.path.append('/Users/Aman/PycharmProjects/Menu_navigation/Weather_App')
+sys.path.append('.//Games')
+sys.path.append('.//Tools')
+sys.path.append('.//WeatherApp')
 
 from Game_menu import Game_menu
 from TicTacToe import TicTacToe
@@ -19,7 +18,7 @@ from Area_calculator import Area_calculator
 from BMI_calculator import BMI_calculator
 from Temperature_converter import Temperature_converter
 
-from Weather_App import Weather_App
+from WeatherApp import Weather_App
 
 print("**Global_functions IMPORTED**")
 

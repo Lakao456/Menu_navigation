@@ -1,8 +1,6 @@
 import Global_functions as Gfunc
 from tkinter import *
 
-print('Game_menu')
-
 
 def Game_menu():
     game_menu = Tk()

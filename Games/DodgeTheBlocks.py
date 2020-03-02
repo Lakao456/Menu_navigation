@@ -88,7 +88,7 @@ def DodgeTheBlocks():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                sys.exit()
+                pygame.quit()
 
             if event.type == pygame.KEYDOWN:
 
@@ -124,5 +124,5 @@ def DodgeTheBlocks():
 
         pygame.display.update()
 
-    print(score)
-    x = input("Press enter to exit.")
+    print("Your score was", score, '!')
+    pygame.quit()
